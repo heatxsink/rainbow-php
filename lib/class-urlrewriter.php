@@ -1,5 +1,4 @@
 <?php
-
 /*
  *
  * Copyright (c) 2009 Nicholas Granado
@@ -23,7 +22,6 @@
  * THE SOFTWARE.
  *
  */
-
 
 class UrlRewriter
 {
