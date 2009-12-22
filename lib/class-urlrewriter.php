@@ -38,7 +38,7 @@ class UrlRewriter
 		else
 		{
 			$filename = basename($path);
-			$assets_filename = self::InjectTimestamp($filename, $assets_version);
+			$assets_filename = self::InjectVersion($filename, $assets_version);
 			$relative_path = str_replace($filename, '', $path);
 			$return_value = sprintf("http: *%s%s%s", $assets_hostname, $relative_path, $assets_filename);
 		}
@@ -46,7 +46,7 @@ class UrlRewriter
 		return $return_value;
 	}
 	
-	private static function InjectTimestamp($filename, $version)
+	private static function InjectVersion($filename, $version)
 	{
 		$return_value = '';
 		$tokens = explode('.', $filename);
