@@ -1,9 +1,9 @@
 #!/bin/bash
 
-USERNAME=ngranado
-REMOTE_HOSTNAME=nickgranado.com
-REMOTE_DIR=/home/ngranado/sites/itakepicturesofmyself/www/
-SSH_KEY="-i nickgranado.pub"
+USERNAME=username
+REMOTE_HOSTNAME=hostname.com
+REMOTE_DIR=/some/dir/here
+SSH_KEY="-i mykey.pub"
 
 /usr/bin/rsync -avz -e ssh ../controllers $USERNAME@$REMOTE_HOSTNAME:$REMOTE_DIR
 /usr/bin/rsync -avz -e ssh ../htdocs $USERNAME@$REMOTE_HOSTNAME:$REMOTE_DIR
