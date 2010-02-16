@@ -23,46 +23,27 @@
  *
  */
 
-class UrlRewriter
-{
-	public static function Transform($path)
-	{
-		$return_value = '';
-		$assets_version = getenv("ASSETS_VERSION");
-		$assets_hostname = getenv("ASSETS_HOSTNAME");
+class BaseController {
 	
-		if($assets_hostname == '')
-		{
-			$return_value = $path;
-		}
-		else
-		{
-			$filename = basename($path);
-			$assets_filename = self::InjectTimestamp($filename, $assets_version);
-			$relative_path = str_replace($filename, '', $path);
-			$return_value = sprintf("http: *%s%s%s", $assets_hostname, $relative_path, $assets_filename);
+	protected static $smarty = NULL;
+
+	public function __contruct() {}
+	public function __destruct() {}
+	public function __clone()    {}
+	
+	public static function GetSmarty() {
+		
+		if (!self::$smarty) {
+		
+			self::$smarty = new Smarty();
+			//self::$smarty->debugging = true;
+			self::$smarty->template_dir = '../smarty/templates';
+			self::$smarty->compile_dir = '../smarty/templates_c';
+			self::$smarty->cache_dir = '../smarty/cache';
+			self::$smarty->config_dir = '../smarty/configs';
 		}
 		
-		return $return_value;
+		return self::$smarty;
 	}
-	
-	private static function InjectTimestamp($filename, $version)
-	{
-		$return_value = '';
-		$tokens = explode('.', $filename);
-		$file_ext = array_pop($tokens);
 
-		if($version == '')
-		{
-			$return_value = $filename;
-		}
-		else
-		{
-			$return_value = sprintf("%s%s.%s", basename($filename, $file_ext), $version, $file_ext);
-		}
-
-		return $return_value;
-	}
 }
-
-?>

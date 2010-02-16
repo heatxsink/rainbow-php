@@ -1,31 +1,26 @@
 <?php
 
-class RootController
+class RootController extends BaseController
 {
-
-        /**
-         * Logs in a user with the given username and password POSTed. Though true
-         * REST doesn't believe in sessions, it is often desirable for an AJAX server.
-         *
-         * @url GET login
-         */
-        public function performLogin()
-        {
-		return sprintf("<html><h1>login method</h1></html>"); 
-	}
-
 	/**
-	 * Returns a JSON string object to the browser when hitting the root of the domain
+	 * This method renders the root of the site.
 	 *
 	 * @url GET /
 	 */
-	public function catchAll()
+	public function RenderRootAction()
 	{
-		return sprintf("<html><h1>catch all method</h1></html>");
+		return self::GetSmarty()->fetch('index.html');
 	}
-
-
-
+	
+	/**
+	 * This method renders the login action of the site.
+	 *
+	 * @url GET login
+	 */
+	public function RenderLoginAction()
+	{
+		return "<html><h1>login action</h1></html>";
+	}
 }
 
 ?>

@@ -1,10 +1,49 @@
 #!/bin/bash
+#
+# Copyright (c) 2010 Nicholas Granado
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+#
+#
+# site variables
+SITE_URL="http://www.yourhostname.com"
+WEB_SERVER_USERNAME=www-data
+USERNAME=your_username
+SSH_KEY="id_rsa"
+REMOTE_HOSTNAME=yourhostname.com
+# directory variables
+REMOTE_DIR=/var/www
+CACHE_DIR=../cache
+CONTROLLERS_DIR=../controllers
+HTDOCS_DIR=../htdocs
+LIB_DIR=../lib
+SMARTY_DIR=../smarty
 
-USERNAME=ngranado
-REMOTE_HOSTNAME=nickgranado.com
-REMOTE_DIR=/home/ngranado/sites/itakepicturesofmyself/www
-SSH_KEY="-i mykey.pub"
-
-/usr/bin/rsync -avz -e ssh ../controllers $USERNAME@$REMOTE_HOSTNAME:$REMOTE_DIR
-/usr/bin/rsync -avz -e ssh ../htdocs $USERNAME@$REMOTE_HOSTNAME:$REMOTE_DIR
-/usr/bin/rsync -avz -e ssh ../lib $USERNAME@$REMOTE_HOSTNAME:$REMOTE_DIR
+/usr/bin/ssh -i $SSH_KEY $USERNAME@$REMOTE_HOSTNAME "curl $SITE_URL"
+/usr/bin/ssh -i $SSH_KEY $USERNAME@$REMOTE_HOSTNAME "sudo chown -R $USERNAME:$USERNAME $REMOTE_DIR/"
+echo "purging smarty cache ...";
+/usr/bin/ssh -i $SSH_KEY $USERNAME@$REMOTE_HOSTNAME "cd $REMOTE_DIR/smarty/templates_c/; sudo rm *.php;"
+echo "purging fu-dolphin-fu-whale cache ...";
+/usr/bin/ssh -i $SSH_KEY $USERNAME@$REMOTE_HOSTNAME "cd $REMOTE_DIR/cache/; sudo rm *.apc;"
+/usr/bin/rsync -avz -e "ssh -i $SSH_KEY" $CACHE_DIR $USERNAME@$REMOTE_HOSTNAME:$REMOTE_DIR/
+/usr/bin/rsync -avz -e "ssh -i $SSH_KEY" $CONTROLLERS_DIR $USERNAME@$REMOTE_HOSTNAME:$REMOTE_DIR/
+/usr/bin/rsync -avz -e "ssh -i $SSH_KEY" $HTDOCS_DIR $USERNAME@$REMOTE_HOSTNAME:$REMOTE_DIR/
+/usr/bin/rsync -avz -e "ssh -i $SSH_KEY" $LIB_DIR $USERNAME@$REMOTE_HOSTNAME:$REMOTE_DIR/
+/usr/bin/rsync -avz -e "ssh -i $SSH_KEY" $SMARTY_DIR $USERNAME@$REMOTE_HOSTNAME:$REMOTE_DIR/
+/usr/bin/ssh -i $SSH_KEY $USERNAME@$REMOTE_HOSTNAME "sudo chown -R $WEB_SERVER_USERNAME:$WEB_SERVER_USERNAME $REMOTE_DIR/"

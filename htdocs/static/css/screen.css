@@ -1,0 +1,64 @@
+body {
+	font-family: "Helvetica Neue",Arial,sans-serif;
+	font-size: 18px;
+	line-height: 18px;
+}
+
+#previous {
+	float: left;
+}
+
+#next {
+	float: right;
+}
+
+img {
+	border: 0px;
+}
+
+a:link,
+a:visited {
+	font-weight: normal; 
+	text-decoration: none;
+	color: #0000CC;
+}
+
+a:hover,
+a:active {
+	font-weight: normal; 
+	text-decoration: underline;
+	color: #0000CC;
+}
+
+h1 {
+	line-height: 18px;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+#nav, #footer {
+	float: right;
+	line-height: 18px;
+}
+
+#nav a {
+	margin-left: 18px;
+}
+
+#content {
+	width: 480px;
+	margin: 36px auto;
+}
+
+#my-images {
+	border: black double 2px;
+	height: 320px;
+}
+
+#footer {
+	margin-top: 36px;
+}
+
+#footer p {
+	text-align: justify;
+}

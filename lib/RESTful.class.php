@@ -1,7 +1,7 @@
 <?php
 /*
  *
- * Copyright (c) 2009 Nicholas Granado
+ * Copyright (c) 2010 Nicholas Granado
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@
 
 class ContentType
 {
+	const APPLICATION_X_JAVASCRIPT = 'application/x-javascript';
 	const APPLICATION_JSON = 'application/json';
 	const TEXT_PLAIN = 'text/plain';
 	const TEXT_HTML = 'text/html; charset=UTF-8';
@@ -36,8 +37,9 @@ class RESTful
 	public $method;
 	public $format;
 	
+	protected $cache_file = '/../cache/route_table.apc';
 	protected $mode = 'debug';
-	protected $url_table = array();
+	protected $route_table = array();
 	protected $error_classes = array();
 	protected $cached = false;
 
@@ -86,16 +88,16 @@ class RESTful
 		{
 			if(function_exists('apc_fetch'))
 			{
-				$url_table = apc_fetch('url_table');
+				$route_table = apc_fetch('route_table');
 			}
-			elseif(file_exists(dirname(__FILE__) . '/url_table.apc'))
+			elseif(file_exists(dirname(__FILE__) . $this->cache_file))
 			{
-				$url_table = unserialize(file_get_contents(dirname(__FILE__) . '/url_table.apc'));
+				$route_table = unserialize(file_get_contents(dirname(__FILE__) . $this->cache_file));
 			}
 			
-			if($url_table && is_array($url_table))
+			if($route_table && is_array($route_table))
 			{
-				$this->url_table = $url_table;
+				$this->route_table = $route_table;
 				$this->cached = true;
 			}
 		}
@@ -107,18 +109,18 @@ class RESTful
 		{
 			if(function_exists('apc_store'))
 			{
-				apc_store('url_table', $this->url_table);
+				apc_store('route_table', $this->route_table);
 			}
 			else
 			{
-				file_put_contents(dirname(__FILE__) . '/url_table.apc', serialize($this->url_table));
+				file_put_contents(dirname(__FILE__) . $this->cache_file, serialize($this->route_table));
 			}
 		}
 	}
 
 	public function FlushCache()
 	{
-		$this->url_table = array();
+		$this->route_table = array();
 		$this->cached = false;
 	}
 
@@ -228,7 +230,7 @@ class RESTful
 
 	protected function FindUrl()
 	{
-		$urls = $this->url_table[$this->method];
+		$urls = $this->route_table[$this->method];
 		if(!$urls)
 		{
 			return null;
@@ -318,19 +320,43 @@ class RESTful
 						$call[] = $args;
 					}
 
-					$this->url_table[$http_method][$url] = $call;
+					$this->route_table[$http_method][$url] = $call;
 				}
 			}
 		}
 	}
 
+	public function GetQueryParams()
+	{
+		$query_params = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
+		$params = explode('&', $query_params);
+		
+		$return_value = array();
+		foreach($params as $param)
+		{
+			$x = explode('=', $param);
+			$return_value[$x[0]] = $x[1];
+		}
+		
+		return $return_value;
+	}
+
 	public function GetPath()
 	{
 		$path = substr($_SERVER['REQUEST_URI'], 1);
+		
+		$position = strpos($path, "?");
+		
+		if($position)
+		{
+			$path = substr($path, 0, $position);
+		}
+		
 		if($path[strlen($path) - 1] == '/')
 		{
 			$path = substr($path, 0, -1);
 		}
+		
 		return $path;
 	}
 	
@@ -348,6 +374,11 @@ class RESTful
 		}
 		
 		return $method;
+	}
+	
+	public function SetFormat($content_type)
+	{
+		$this->format = $content_type;
 	}
 	
 	public function GetFormat()
@@ -377,6 +408,7 @@ class RESTful
 
 	public function SendData($data)
 	{
+		header('X-Server: fu-dolphin-fu-whale-php');
 		header('Content-Type: ' . $this->format);
 
 		if(ContentType::APPLICATION_JSON == $this->format)

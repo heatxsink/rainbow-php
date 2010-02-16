@@ -1,6 +1,6 @@
 <?php
 
-class UsersController
+class UsersController extends BaseController
 {
 	/**
 	 * Gets the user by id or current user
@@ -8,7 +8,7 @@ class UsersController
 	 * @url GET /:id
 	 * @url GET /current
 	 */
-	public function getUser($id = null)
+	public function RenderUserAction($id = null)
 	{
 		if ($id != 'current')
 		{
@@ -19,7 +19,7 @@ class UsersController
 			$user = 42; 
 		}
 	   
-		return sprintf("<html><h1>user %s</h1></html>", $user);
+		return sprintf("<html><h1>user_id: %s</h1></html>", $user);
 	}
 }
 
