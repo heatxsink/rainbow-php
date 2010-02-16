@@ -1,5 +1,4 @@
 <?php
-
 /*
  *
  * Copyright (c) 2010 Nicholas Granado
