@@ -23,20 +23,19 @@
  *
  */
 
-class UrlRewriter
-{
-	public static function Transform($path)
-	{
+class UrlRewriter {
+	
+	public static function Transform($path) {
+		
 		$return_value = '';
 		$assets_version = getenv("ASSETS_VERSION");
 		$assets_hostname = getenv("ASSETS_HOSTNAME");
-	
-		if($assets_hostname == '')
-		{
+		
+		if($assets_hostname == '') {
+			
 			$return_value = $path;
-		}
-		else
-		{
+		} else {
+			
 			$filename = basename($path);
 			$assets_filename = self::InjectTimestamp($filename, $assets_version);
 			$relative_path = str_replace($filename, '', $path);
@@ -46,21 +45,20 @@ class UrlRewriter
 		return $return_value;
 	}
 	
-	private static function InjectTimestamp($filename, $version)
-	{
+	private static function InjectTimestamp($filename, $version) {
+		
 		$return_value = '';
 		$tokens = explode('.', $filename);
 		$file_ext = array_pop($tokens);
-
-		if($version == '')
-		{
+		
+		if($version == '') {
+			
 			$return_value = $filename;
-		}
-		else
-		{
+		} else {
+			
 			$return_value = sprintf("%s%s.%s", basename($filename, $file_ext), $version, $file_ext);
 		}
-
+		
 		return $return_value;
 	}
 }

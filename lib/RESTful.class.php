@@ -23,16 +23,16 @@
  *
  */
 
-class ContentType
-{
+class ContentType {
+	
 	const APPLICATION_X_JAVASCRIPT = 'application/x-javascript';
 	const APPLICATION_JSON = 'application/json';
 	const TEXT_PLAIN = 'text/plain';
 	const TEXT_HTML = 'text/html; charset=UTF-8';
 }
 
-class RESTful
-{
+class RESTful {
+	
 	public $url;
 	public $method;
 	public $format;
@@ -80,74 +80,72 @@ class RESTful
 		'503' => 'Service Unavailable'
 	);
 
-	public function	 __construct($mode = 'debug')
-	{
+	public function	 __construct($mode = 'debug') {
+		
 		$this->mode = $mode;
 
-		if($mode == 'prod')
-		{
-			if(function_exists('apc_fetch'))
-			{
+		if($mode == 'prod') {
+			
+			if(function_exists('apc_fetch')) {
+				
 				$route_table = apc_fetch('route_table');
 			}
-			elseif(file_exists(dirname(__FILE__) . $this->cache_file))
-			{
+			elseif(file_exists(dirname(__FILE__) . $this->cache_file)) {
+				
 				$route_table = unserialize(file_get_contents(dirname(__FILE__) . $this->cache_file));
 			}
 			
-			if($route_table && is_array($route_table))
-			{
+			if($route_table && is_array($route_table)) {
+				
 				$this->route_table = $route_table;
 				$this->cached = true;
 			}
 		}
 	}
 
-	public function	 __destruct()
-	{
-		if($this->mode == 'prod' && !$this->cached)
-		{
-			if(function_exists('apc_store'))
-			{
+	public function	 __destruct() {
+		
+		if($this->mode == 'prod' && !$this->cached) {
+			
+			if(function_exists('apc_store')) {
+				
 				apc_store('route_table', $this->route_table);
-			}
-			else
-			{
+			} else {
+				
 				file_put_contents(dirname(__FILE__) . $this->cache_file, serialize($this->route_table));
 			}
 		}
 	}
 
-	public function FlushCache()
-	{
+	public function FlushCache() {
+		
 		$this->route_table = array();
 		$this->cached = false;
 	}
 
-	public function HandleRequests()
-	{
+	public function HandleRequests() {
+		
 		$this->url = $this->GetPath();
 		$this->method = $this->GetMethod();
 		$this->format = $this->GetFormat();
 		
-		if ($this->method == 'PUT' || $this->method == 'POST')
-		{
+		if ($this->method == 'PUT' || $this->method == 'POST') {
+			
 			$this->data = $this->GetData();
 		}
 
 		$call = $this->FindUrl();
-		if ($call)
-		{
+		if ($call) {
+			
 			$obj = $call[0];
 			
-			if (is_string($obj))
-			{
-				if (class_exists($obj))
-				{
+			if (is_string($obj)) {
+				
+				if (class_exists($obj)) {
+					
 					$obj = new $obj();
-				}
-				else
-				{
+				} else {
+					
 					throw new Exception("Class $obj does not exist");
 				}
 			}
@@ -158,37 +156,35 @@ class RESTful
 			
 			$result = call_user_method_array($method, $obj, $params);
 			
-			if($result !== null)
-			{
+			if($result !== null) {
+				
 				$this->SendData($result);
 			}
-		}
-		else
-		{
+		} else {
+			
 			$this->HandleError(404);
 		}
 	}
 
-	public function AddClass($class, $base_path = '')
-	{
-		if (!$this->cached)
-		{
-			if(is_string($class) && !class_exists($class))
-			{
+	public function AddClass($class, $base_path = '') {
+		
+		if (!$this->cached) {
+			
+			if(is_string($class) && !class_exists($class)) {
+				
 				throw new Exception('Invalid method or class');
-			}
-			elseif(!is_string($class) && !is_object($class))
-			{
+			} elseif(!is_string($class) && !is_object($class)) {
+				
 				throw new Exception('Invalid method or class; must be a classname or object');
 			}
 			
-			if($base_path[0] == '/')
-			{
+			if($base_path[0] == '/') {
+				
 				$base_path = substr($base_path, 1);
 			}
 			
-			if($base_path[strlen($base_path) - 1] != '/')
-			{
+			if($base_path[strlen($base_path) - 1] != '/') {
+				
 				$base_path .= '/';
 			}
 			
@@ -196,28 +192,27 @@ class RESTful
 		}
 	}
 	
-	public function AddErrorClass($class)
-	{
+	public function AddErrorClass($class) {
+		
 		$this->error_classes[] = $class;
 	}
 	
-	public function HandleError($status_code)
-	{
+	public function HandleError($status_code) {
+		
 		$method = "handle$status_code";
 		
-		foreach($this->error_classes as $class)
-		{
-			if(is_object($class))
-			{
+		foreach($this->error_classes as $class) {
+			
+			if(is_object($class)) {
+				
 				$reflection = new ReflectionObject($class);
-			}
-			elseif(class_exists($class))
-			{
+			} elseif(class_exists($class)) {
+				
 				$reflection = new ReflectionClass($class);
 			}
 			
-			if($reflection->hasMethod($method))
-			{
+			if($reflection->hasMethod($method)) {
+				
 				$obj = is_string($class) ? new $class() : $class;
 				$obj->$method();
 				return;
@@ -228,36 +223,36 @@ class RESTful
 		$this->SendData($status_code . ' ' . $this->status_codes[$status_code]);
 	}
 
-	protected function FindUrl()
-	{
+	protected function FindUrl() {
+		
 		$urls = $this->route_table[$this->method];
-		if(!$urls)
-		{
+
+		if(!$urls) {
+
 			return null;
 		}
 		
-		foreach($urls as $url => $call)
-		{
-			if(!strstr($url, ':'))
-			{
-				if ($url == $this->url)
-				{
+		foreach($urls as $url => $call) {
+			
+			if(!strstr($url, ':')) {
+				
+				if ($url == $this->url) {
+					
 					return $call;
 				}
-			}
-			else
-			{
+			} else {
+				
 				$regex = preg_replace('/\\\:([^\/]+)/', '(?P<$1>[^/]+)', preg_quote($url));
 				
-				if(preg_match(":^$regex$:", $this->url, $matches))
-				{
+				if(preg_match(":^$regex$:", $this->url, $matches)) {
+					
 					$args = $call[2];
 					$params = array();
 					
-					foreach($matches as $arg => $match)
-					{
-						if(isset($args[$arg]))
-						{
+					foreach($matches as $arg => $match) {
+
+						if(isset($args[$arg])) {
+							
 							$params[$args[$arg]] = $match;
 						}
 					}
@@ -270,53 +265,53 @@ class RESTful
 		}
 	}
 
-	protected function GenerateMap($class, $base_path = '')
-	{
-		if(is_object($class))
-		{
+	protected function GenerateMap($class, $base_path = '') {
+		
+		if(is_object($class)) {
+			
 			$reflection = new ReflectionObject($class);
-		}
-		elseif(class_exists($class))
-		{
+		} elseif(class_exists($class)) {
+			
 			$reflection = new ReflectionClass($class);
 		}
 
 		$methods = $reflection->getMethods(ReflectionMethod::IS_PUBLIC);
 
-		foreach($methods as $method)
-		{
+		foreach($methods as $method) {
+			
 			$doc = $method->getDocComment();
 			
-			if(preg_match_all('/@url\s+(GET|POST|PUT|DELETE|HEAD|OPTIONS)[ \t]*\/?(\S*)/s', $doc, $matches, PREG_SET_ORDER))
-			{
+			if(preg_match_all('/@url\s+(GET|POST|PUT|DELETE|HEAD|OPTIONS)[ \t]*\/?(\S*)/s', $doc, $matches, PREG_SET_ORDER)) {
+				
 				$params = $method->getParameters();
 				
-				foreach($matches as $match)
-				{
+				foreach($matches as $match) {
+					
 					$http_method = $match[1];
 					$url = $base_path . $match[2];
 					
 					// if there's a trailing slash take it off!
-					if($url[strlen($url) - 1] == '/')
-					{
+					if($url[strlen($url) - 1] == '/') {
+						
 						$url = substr($url, 0, -1);
 					}
 					
 					// if there's a slash up front take it off!
-					if($url[0] == '/')
-					{
+					if($url[0] == '/') {
+						
 						$url = substr($url, 1, strlen($url));
 					}
 					
 					$call = array($class, $method->getName());
 					
-					if(strstr($url, ':'))
-					{
+					if(strstr($url, ':')) {
+						
 						$args = array();
-						foreach($params as $param)
-						{
+						foreach($params as $param) {
+							
 							$args[$param->getName()] = $param->getPosition();
 						}
+						
 						$call[] = $args;
 					}
 
@@ -326,14 +321,14 @@ class RESTful
 		}
 	}
 
-	public function GetQueryParams()
-	{
+	public function GetQueryParams() {
+		
 		$query_params = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
 		$params = explode('&', $query_params);
 		
 		$return_value = array();
-		foreach($params as $param)
-		{
+		foreach($params as $param) {
+			
 			$x = explode('=', $param);
 			$return_value[$x[0]] = $x[1];
 		}
@@ -341,94 +336,89 @@ class RESTful
 		return $return_value;
 	}
 
-	public function GetPath()
-	{
+	public function GetPath() {
+		
 		$path = substr($_SERVER['REQUEST_URI'], 1);
 		
 		$position = strpos($path, "?");
 		
-		if($position)
-		{
+		if($position) {
+			
 			$path = substr($path, 0, $position);
 		}
 		
-		if($path[strlen($path) - 1] == '/')
-		{
+		if($path[strlen($path) - 1] == '/') {
+			
 			$path = substr($path, 0, -1);
 		}
 		
 		return $path;
 	}
 	
-	public function GetMethod()
-	{
+	public function GetMethod() {
+		
 		$method = $_SERVER['REQUEST_METHOD'];
 		
-		if($method == 'POST' && $_GET['method'] == 'PUT')
-		{
+		if($method == 'POST' && $_GET['method'] == 'PUT') {
+			
 			$method = 'PUT';
-		}
-		elseif($method == 'POST' && $_GET['method'] == 'DELETE')
-		{
+		} elseif($method == 'POST' && $_GET['method'] == 'DELETE') {
+			
 			$method = 'DELETE';
 		}
 		
 		return $method;
 	}
 	
-	public function SetFormat($content_type)
-	{
+	public function SetFormat($content_type) {
+		
 		$this->format = $content_type;
 	}
 	
-	public function GetFormat()
-	{
+	public function GetFormat() {
+		
 		$format = ContentType::TEXT_HTML;
 		$accept = explode(',', $_SERVER['HTTP_ACCEPT']);
 		
-		if(in_array(ContentType::TEXT_PLAIN, $accept))
-		{
+		if(in_array(ContentType::TEXT_PLAIN, $accept)) {
+			
 			$format = ContentType::TEXT_PLAIN;
-		}
-		elseif(in_array(ContentType::APPLICATION_JSON, $accept))
-		{
+		} elseif(in_array(ContentType::APPLICATION_JSON, $accept)) {
+			
 			$format = ContentType::APPLICATION_JSON;
 		}
 		
 		return $format;
 	}
 	
-	public function GetData()
-	{
+	public function GetData() {
+		
 		$data = file_get_contents('php://input');
 		$data = json_decode($data);
 		return $data;
 	}
 	
 
-	public function SendData($data)
-	{
+	public function SendData($data) {
+		
 		header('X-Server: fu-dolphin-fu-whale-php');
 		header('Content-Type: ' . $this->format);
-
-		if(ContentType::APPLICATION_JSON == $this->format)
-		{
+		
+		if(ContentType::APPLICATION_JSON == $this->format) {
+			
 			$data = json_encode($data);
-		}
-		elseif(ContentType::TEXT_HTML == $this->format)
-		{
+		} elseif(ContentType::TEXT_HTML == $this->format) {
+			
+			//Left Empty
+		} elseif(ContentType::TEXT_PLAIN == $this->format) {
+			
 			//Left Empty
 		}
-		elseif(ContentType::TEXT_PLAIN == $this->format)
-		{
-			//Left Empty
-		}
-
+		
 		echo $data;
 	}
 
-	public function SetStatus($code)
-	{
+	public function SetStatus($code) {
 		$http_error_code = $code . " " . $this->status_codes[strval($code)];
 		header("{$_SERVER['SERVER_PROTOCOL']} $http_error_code");
 	}

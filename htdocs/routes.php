@@ -37,13 +37,12 @@ spl_autoload_register();
 $DEBUG = false;
 $restful = null;
 
-if($DEBUG)
-{
+if($DEBUG) {
+	
 	$restful = new RESTful('debug');
 	$restful->FlushCache();
-}
-else
-{
+} else {
+	
 	$restful = new RESTful('prod');
 }
 

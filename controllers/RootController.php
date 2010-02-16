@@ -1,14 +1,14 @@
 <?php
 
-class RootController extends BaseController
-{
+class RootController extends BaseController {
+	
 	/**
 	 * This method renders the root of the site.
 	 *
 	 * @url GET /
 	 */
-	public function RenderRootAction()
-	{
+	public function RenderRootAction() {
+	
 		return self::GetSmarty()->fetch('index.html');
 	}
 	
@@ -17,8 +17,8 @@ class RootController extends BaseController
 	 *
 	 * @url GET login
 	 */
-	public function RenderLoginAction()
-	{
+	public function RenderLoginAction() {
+	
 		return "<html><h1>login action</h1></html>";
 	}
 }
