@@ -401,7 +401,7 @@ class RESTful {
 
 	public function SendData($data) {
 		
-		header('X-Server: fu-dolphin-fu-whale-php');
+		header('X-fu-dolphin-fu-whale-php-version: 0.69');
 		header('Content-Type: ' . $this->format);
 		
 		if(ContentType::APPLICATION_JSON == $this->format) {
