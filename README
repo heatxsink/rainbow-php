@@ -16,9 +16,10 @@
 
                    ~~~~ fu-whale-fu-dolphin-php ~~~~
 
-My attempt at a quick way in php to write a MVC-esque site.  I need to really 
-write a meta programming script that'll autogenerate this code. So far all 
-I've done is create a way to make clean controllers/urls.  I'm not entirely 
-content with it so it'll probably change in the upcomming weeks.
+My attempt at a quick way in php to write a MVC-esque site (you bring your 
+own M, the framework provides the C and V).  I need to really write a meta 
+programming script that'll autogenerate this code. So far all I've done is 
+create a way to make clean controllers/urls.  I'm not entirely content with 
+it so it'll probably change in the upcomming weeks.
 
              If you have feature requests please send email.
