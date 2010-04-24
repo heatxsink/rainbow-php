@@ -8,8 +8,8 @@ class RootController extends BaseController {
 	 * @url GET /
 	 */
 	public function RenderRootAction() {
-	
-		return self::GetSmarty()->fetch('index.html');
+		
+		return self::RenderTemplate('index.html');
 	}
 	
 	/**
@@ -18,7 +18,7 @@ class RootController extends BaseController {
 	 * @url GET login
 	 */
 	public function RenderLoginAction() {
-	
+		
 		return "<html><h1>login action</h1></html>";
 	}
 }

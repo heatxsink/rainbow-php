@@ -26,17 +26,22 @@
 class BaseController {
 	
 	protected static $smarty = NULL;
-
+	
 	public function __contruct() {}
 	public function __destruct() {}
 	public function __clone()    {}
+	
+	public static function RenderTemplate($template) {
+		
+		self::GetSmarty()->display($template);
+	}
 	
 	public static function GetSmarty() {
 		
 		if (!self::$smarty) {
 		
 			self::$smarty = new Smarty();
-			//self::$smarty->debugging = true;
+			self::$smarty->debugging = true;
 			self::$smarty->template_dir = '../smarty/templates';
 			self::$smarty->compile_dir = '../smarty/templates_c';
 			self::$smarty->cache_dir = '../smarty/cache';
