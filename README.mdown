@@ -3,9 +3,8 @@
 rainbow-php
 ===========
 
-My attempt at a quick way in php to write a MVC-esque site (you bring your 
-own Model, the framework provides the Controller and View separation of 
-concerns).
+A quick and dirty way to write web apps in php. The lightweight framework follows the MVC pattern however you bring your 
+own Model. The framework enforces the Controller and View separation of concerns.
 
 contact info
 ------------
