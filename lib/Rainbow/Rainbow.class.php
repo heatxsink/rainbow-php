@@ -37,7 +37,7 @@ class Rainbow {
 	public $method;
 	public $format;
 	
-	protected $cache_file = Config::$RAINBOW_ROUTE_TABLE;
+	protected $cache_file = '';
 	protected $mode = 'debug';
 	protected $route_table = array();
 	protected $error_classes = array();
@@ -81,7 +81,7 @@ class Rainbow {
 	);
 
 	public function	 __construct($mode = 'debug') {
-		
+		$this->cache_file = Config::$RAINBOW_ROUTE_TABLE;
 		$this->mode = $mode;
 
 		if($mode == 'prod') {

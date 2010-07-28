@@ -24,6 +24,7 @@
  */
 
 include_once('../lib/Smarty2/Smarty.class.php');
+include_once('../lib/Rainbow/Config.class.php');
 include_once('../lib/Rainbow/Rainbow.class.php');
 include_once('../lib/Rainbow/BaseController.class.php');
 

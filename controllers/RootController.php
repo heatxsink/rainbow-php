@@ -17,7 +17,7 @@ class RootController extends BaseController {
 	/**
 	 * This method renders the login action of the site.
 	 *
-	 * @url GET login
+	 * @url GET /login
 	 */
 	public function RenderLoginAction() {
 		
