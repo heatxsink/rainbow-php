@@ -9,7 +9,8 @@ class RootController extends BaseController {
 	 */
 	public function RenderRootAction() {
 		
-		return self::RenderTemplate('index.html');
+		self::SetParameter('content', 'Your content goes here.');
+		self::Render('index.html');
 	}
 	
 	/**

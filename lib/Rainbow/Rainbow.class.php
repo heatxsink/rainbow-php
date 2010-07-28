@@ -31,13 +31,13 @@ class ContentType {
 	const TEXT_HTML = 'text/html; charset=UTF-8';
 }
 
-class RESTful {
+class Rainbow {
 	
 	public $url;
 	public $method;
 	public $format;
 	
-	protected $cache_file = '/../cache/route_table.apc';
+	protected $cache_file = Config::$RAINBOW_ROUTE_TABLE;
 	protected $mode = 'debug';
 	protected $route_table = array();
 	protected $error_classes = array();
@@ -401,7 +401,7 @@ class RESTful {
 
 	public function SendData($data) {
 		
-		header('X-fu-dolphin-fu-whale-php-version: 0.69');
+		header('x-rainbow-php-version: 0.80');
 		header('Content-Type: ' . $this->format);
 		
 		if(ContentType::APPLICATION_JSON == $this->format) {

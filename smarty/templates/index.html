@@ -8,10 +8,10 @@
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 <link rel="stylesheet" href="/static/css/blueprint/screen.css" type="text/css" media="screen, projection">
 <link rel="stylesheet" href="/static/css/blueprint/print.css" type="text/css" media="print">
-<link rel="stylesheet" href="/static/css/screen.css" media="all" type="text/css" />
 <!--[if lt IE 8]>
 <link rel="stylesheet" href="/static/css/blueprint/ie.css" type="text/css" media="screen, projection">
 <![endif]-->
+<link rel="stylesheet" href="/static/css/screen.css" media="all" type="text/css" />
 <script type="text/javascript" src="/static/js/combined.js"></script>
 <title>Sample Site</title>
 </head>
@@ -24,10 +24,10 @@
 	<h1>Sample Site</h1>
 
 	<div style="padding-top: 20px;">
-		<p>Your content goes here.</p>
+		<p>{$content}</p>
 	</div>
 </div>
 
-{include file='google_analytics.html'}
+{include file='javascripts.html'}
 </body>
 </html>

@@ -1,6 +1,7 @@
 <?php
 
 class UsersController extends BaseController {
+	
 	/**
 	 * Gets the user by id or current user
 	 *

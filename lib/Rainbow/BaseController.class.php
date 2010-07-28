@@ -25,30 +25,33 @@
 
 class BaseController {
 	
-	protected static $smarty = NULL;
-	protected static $DEBUG = false;
+	protected static $template_engine = NULL;
 	public function __contruct() {}
 	public function __destruct() {}
 	public function __clone()    {}
 	
-	public static function RenderTemplate($template) {
+	public static function Render($template) {
 		
-		self::GetSmarty()->display($template);
+		self::GetTemplateEngine()->display($template);
 	}
 	
-	public static function GetSmarty() {
+	public static function SetParameter($key, $value) {
 		
-		if (!self::$smarty) {
-			
-			self::$smarty = new Smarty();
-			self::$smarty->debugging = self::$DEBUG;
-			self::$smarty->template_dir = '../smarty/templates';
-			self::$smarty->compile_dir = '../smarty/templates_c';
-			self::$smarty->cache_dir = '../smarty/cache';
-			self::$smarty->config_dir = '../smarty/configs';
+		self::GetTemplateEngine()->assign($key, $value);
+	}
+	
+	private static function GetTemplateEngine() {
+		
+		if (!self::$template_engine) {
+			self::$template_engine = new Smarty();
+			self::$template_engine->debugging = Config::$SMARTY_DEBUG;
+			self::$template_engine->template_dir = Config::$SMARTY_TEMPLATE_DIRECTORY;
+			self::$template_engine->compile_dir = Config::$SMARTY_COMPILE_DIRECTORY;
+			self::$template_engine->cache_dir = Config::$SMARTY_CACHE_DIRECTORY;
+			self::$template_engine->config_dir = Config::$SMARTY_CONFIG_DIRECTORY;
 		}
 		
-		return self::$smarty;
+		return self::$template_engine;
 	}
 
 }

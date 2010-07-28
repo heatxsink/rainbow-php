@@ -37,9 +37,9 @@ SMARTY_DIR=../smarty
 
 /usr/bin/ssh -i $SSH_KEY $USERNAME@$REMOTE_HOSTNAME "curl $SITE_URL"
 /usr/bin/ssh -i $SSH_KEY $USERNAME@$REMOTE_HOSTNAME "sudo chown -R $USERNAME:$USERNAME $REMOTE_DIR/"
-echo "purging smarty cache ...";
+echo "purging smarty template cache ...";
 /usr/bin/ssh -i $SSH_KEY $USERNAME@$REMOTE_HOSTNAME "cd $REMOTE_DIR/smarty/templates_c/; sudo rm *.php;"
-echo "purging fu-dolphin-fu-whale cache ...";
+echo "purging rainbow-php cache ...";
 /usr/bin/ssh -i $SSH_KEY $USERNAME@$REMOTE_HOSTNAME "cd $REMOTE_DIR/cache/; sudo rm *.apc;"
 /usr/bin/rsync -avz -e "ssh -i $SSH_KEY" $CACHE_DIR $USERNAME@$REMOTE_HOSTNAME:$REMOTE_DIR/
 /usr/bin/rsync -avz -e "ssh -i $SSH_KEY" $CONTROLLERS_DIR $USERNAME@$REMOTE_HOSTNAME:$REMOTE_DIR/

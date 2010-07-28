@@ -23,28 +23,16 @@
  *
  */
 
-include_once('../lib/Smarty2/Smarty.class.php');
-include_once('../lib/Rainbow/Rainbow.class.php');
-include_once('../lib/Rainbow/BaseController.class.php');
-
-// your site controllers should go below here
-include_once('../controllers/RootController.php');
-include_once('../controllers/UsersController.php');
-
-// do not load our php includes unless we actually use them
-spl_autoload_register();
-
-$rainbow = null;
-
-if(Config::$RAINBOW_DEBUG_MODE) {
+class Config {
 	
-	$rainbow = new Rainbow('debug');
-	$rainbow->FlushCache();
-} else {
+	public static $RAINBOW_DEBUG_MODE = false;
+	public static $RAINBOW_ROUTE_TABLE = '/../cache/route_table.apc';
 	
-	$rainbow = new Rainbow('prod');
+	public static $SMARTY_DEBUG = false;
+	public static $SMARTY_TEMPLATE_DIRECTORY = '../smarty/templates';
+	public static $SMARTY_COMPILE_DIRECTORY = '../smarty/templates_c';
+	public static $SMARTY_CACHE_DIRECTORY = '../smarty/cache';
+	public static $SMARTY_CONFIG_DIRECTORY = '../smarty/configs';
 }
 
-$rainbow->AddClass('RootController');
-$rainbow->AddClass('UsersController', '/users');
-$rainbow->HandleRequests();
+?>
