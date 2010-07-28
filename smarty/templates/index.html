@@ -6,14 +6,13 @@
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-<link rel="stylesheet" href="/static/css/blueprint/screen.css" type="text/css" media="screen, projection">
-<link rel="stylesheet" href="/static/css/blueprint/print.css" type="text/css" media="print">
-<!--[if lt IE 8]>
-<link rel="stylesheet" href="/static/css/blueprint/ie.css" type="text/css" media="screen, projection">
-<![endif]-->
+
+{include file='blueprint_css.html'}
+
 <link rel="stylesheet" href="/static/css/screen.css" media="all" type="text/css" />
 <script type="text/javascript" src="/static/js/combined.js"></script>
-<title>Sample Site</title>
+
+<title>{$page_title}</title>
 </head>
 <body>
 <div id="content">
@@ -21,7 +20,7 @@
 		<a href="/">Home</a>
 	</div>
 
-	<h1>Sample Site</h1>
+	<h1>{$page_title}</h1>
 
 	<div style="padding-top: 20px;">
 		<p>{$content}</p>

@@ -9,6 +9,7 @@ class RootController extends BaseController {
 	 */
 	public function RenderRootAction() {
 		
+		self::SetParameter('page_title', 'Sample Site');
 		self::SetParameter('content', 'Your content goes here.');
 		self::Render('index.html');
 	}
