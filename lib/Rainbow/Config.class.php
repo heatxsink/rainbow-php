@@ -28,7 +28,7 @@ class Config {
 	public static $RAINBOW_DEBUG_MODE = false;
 	public static $RAINBOW_ROUTE_TABLE = '../../cache/route_table.apc';
 	
-	public static $SMARTY_DEBUG = false;
+	public static $SMARTY_DEBUG_MODE = false;
 	public static $SMARTY_TEMPLATE_DIRECTORY = '../../smarty/templates';
 	public static $SMARTY_COMPILE_DIRECTORY = '../../smarty/templates_c';
 	public static $SMARTY_CACHE_DIRECTORY = '../../smarty/cache';

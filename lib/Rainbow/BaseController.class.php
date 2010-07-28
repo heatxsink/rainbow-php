@@ -44,7 +44,7 @@ class BaseController {
 		
 		if (!self::$template_engine) {
 			self::$template_engine = new Smarty();
-			self::$template_engine->debugging = Config::$SMARTY_DEBUG;
+			self::$template_engine->debugging = Config::$SMARTY_DEBUG_MODE;
 			self::$template_engine->template_dir = Config::$SMARTY_TEMPLATE_DIRECTORY;
 			self::$template_engine->compile_dir = Config::$SMARTY_COMPILE_DIRECTORY;
 			self::$template_engine->cache_dir = Config::$SMARTY_CACHE_DIRECTORY;
