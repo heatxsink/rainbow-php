@@ -23,7 +23,7 @@ class ApiController extends BaseApiController {
 						array("first_name" => "jane", "last_name" => "doe"),
 					);
 		
-		if(isset($id)) {
+		if(validate_var($id)) {
 			if($id == 0 || $id == 1) {
 				$data = $data[$id];
 			} else {

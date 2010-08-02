@@ -49,13 +49,13 @@ class BaseApiController {
 		$this->service->SetFormat(ContentType::APPLICATION_X_JAVASCRIPT);
 		$return_value = '';
 
-		if(isset($_GET['formatted'])) {
+		if(validate_var($_GET['formatted'])) {
 			$return_value = json_encode_pretty($data);
 		} else {
 			$return_value = json_encode($data);
 		}
 
-		if(isset($_GET['json_callback'])) {
+		if(validate_var($_GET['json_callback'])) {
 			$json_callback = $_GET['json_callback'];
 			$return_value = sprintf("%s(%s);", $json_callback, $return_value);
 		}
