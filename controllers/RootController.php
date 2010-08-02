@@ -21,7 +21,7 @@ class RootController extends BaseController {
 	 */
 	public function RenderLoginAction() {
 		
-		return "<html><h1>login action</h1></html>";
+		return "<html><h1>this is the login action</h1></html>";
 	}
 }
 

@@ -53,5 +53,4 @@ class BaseController {
 		
 		return self::$template_engine;
 	}
-
 }

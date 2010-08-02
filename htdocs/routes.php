@@ -22,15 +22,17 @@
  * THE SOFTWARE.
  *
  */
-
 include_once('../lib/Smarty2/Smarty.class.php');
+include_once('../lib/Rainbow/functions.php');
 include_once('../lib/Rainbow/Config.class.php');
 include_once('../lib/Rainbow/Rainbow.class.php');
 include_once('../lib/Rainbow/BaseController.class.php');
+include_once('../lib/Rainbow/BaseApiController.class.php');
 
 // your site controllers should go below here
 include_once('../controllers/RootController.php');
 include_once('../controllers/UsersController.php');
+include_once('../controllers/ApiController.php');
 
 // do not load our php includes unless we actually use them
 spl_autoload_register();
@@ -48,4 +50,5 @@ if(Config::$RAINBOW_DEBUG_MODE) {
 
 $rainbow->AddClass('RootController');
 $rainbow->AddClass('UsersController', '/users');
+$rainbow->AddClass('ApiController', '/api/1/');
 $rainbow->HandleRequests();

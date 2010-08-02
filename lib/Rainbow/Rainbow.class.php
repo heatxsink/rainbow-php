@@ -376,7 +376,6 @@ class Rainbow {
 	}
 	
 	public function GetFormat() {
-		
 		$format = ContentType::TEXT_HTML;
 		$accept = explode(',', $_SERVER['HTTP_ACCEPT']);
 		
@@ -392,7 +391,6 @@ class Rainbow {
 	}
 	
 	public function GetData() {
-		
 		$data = file_get_contents('php://input');
 		$data = json_decode($data);
 		return $data;
@@ -400,21 +398,8 @@ class Rainbow {
 	
 
 	public function SendData($data) {
-		
 		header('x-rainbow-php-version: 0.80');
 		header('Content-Type: ' . $this->format);
-		
-		if(ContentType::APPLICATION_JSON == $this->format) {
-			
-			$data = json_encode($data);
-		} elseif(ContentType::TEXT_HTML == $this->format) {
-			
-			//Left Empty
-		} elseif(ContentType::TEXT_PLAIN == $this->format) {
-			
-			//Left Empty
-		}
-		
 		echo $data;
 	}
 
