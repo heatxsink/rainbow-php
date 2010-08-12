@@ -30,12 +30,12 @@ class BaseController {
 	public function __destruct() {}
 	public function __clone()    {}
 	
-	public static function Render($template) {
+	public function Render($template) {
 		
 		self::GetTemplateEngine()->display($template);
 	}
 	
-	public static function SetParameter($key, $value) {
+	public function SetParameter($key, $value) {
 		
 		self::GetTemplateEngine()->assign($key, $value);
 	}
