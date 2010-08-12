@@ -43,7 +43,7 @@ class Rainbow {
 	protected $error_classes = array();
 	protected $cached = false;
 
-	private $status_codes = array(
+	public $status_codes = array(
 		'100' => 'Continue',
 		'200' => 'OK',
 		'201' => 'Created',
@@ -152,9 +152,16 @@ class Rainbow {
 			
 			$obj->service = $this;
 			$method = $call[1];
-			$params = $call[2];
 			
-			$result = call_user_method_array($method, $obj, $params);
+			if(count($call) > 2) {
+				$params = $call[2];
+			} else {
+				$params = array();
+			}
+			
+			$result = call_user_func_array(array($obj, $method), $params);
+			// the following function is deprecated
+			//$result = call_user_method_array($method, $obj, $params);
 			
 			if($result !== null) {
 				

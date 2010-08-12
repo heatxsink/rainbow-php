@@ -3,6 +3,14 @@
 class UsersController extends BaseController {
 	
 	/**
+	 * @url GET /
+	 */
+	public function RenderRoot() {
+		
+		return sprintf("<html><h1>users root</h1></html>");
+	}
+	
+	/**
 	 * Gets the user by id or current user
 	 *
 	 * @url GET /:id

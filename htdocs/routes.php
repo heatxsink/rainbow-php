@@ -37,6 +37,10 @@ include_once('../controllers/ApiController.php');
 // do not load our php includes unless we actually use them
 spl_autoload_register();
 
+error_reporting(E_ALL ^ E_NOTICE);
+
+date_default_timezone_set(Config::$RAINBOW_DEFAULT_TIMEZONE);
+
 $rainbow = null;
 
 if(Config::$RAINBOW_DEBUG_MODE) {
@@ -48,7 +52,7 @@ if(Config::$RAINBOW_DEBUG_MODE) {
 	$rainbow = new Rainbow('prod');
 }
 
-$rainbow->AddClass('RootController');
-$rainbow->AddClass('UsersController', '/users');
+$rainbow->AddClass('RootController', '/');
+$rainbow->AddClass('UsersController', '/users/');
 $rainbow->AddClass('ApiController', '/api/1/');
 $rainbow->HandleRequests();
