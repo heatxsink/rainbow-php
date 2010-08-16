@@ -112,7 +112,7 @@ class Rainbow {
 				apc_store('route_table', $this->route_table);
 			} else {
 				
-				file_put_contents(dirname(__FILE__) . $this->cache_file, serialize($this->route_table));
+				file_put_contents(dirname(__FILE__) . '/' . $this->cache_file, serialize($this->route_table));
 			}
 		}
 	}
