@@ -10,6 +10,13 @@ contact info
 ------------
 if you have feature requests please send email to ngranado AT gmail DOT com.
 
+tested with
+-----------
+* Apache 2.X with mod_rewrite
+* PHP 5.2.X and 5.3.X
+* sshd (this is only required for the push script)
+* Linux (has not been tested on Windows)
+
 license
 -------
 The MIT License
