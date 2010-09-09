@@ -25,7 +25,7 @@
 
 class BaseApiController {
 	
-	public function __contruct() {}
+	public function __construct() {}
 	public function __destruct() {}
 	public function __clone()    {}
 
