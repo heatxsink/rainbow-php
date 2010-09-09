@@ -34,8 +34,9 @@ include_once('../controllers/RootController.php');
 include_once('../controllers/UsersController.php');
 include_once('../controllers/ApiController.php');
 
-// do not load our php includes unless we actually use them
-spl_autoload_register();
+// do not load our php includes unless we actually use them this should come 
+// back in a later version of rainbow, this is obviously not being used properly
+// spl_autoload_register();
 
 error_reporting(E_ALL ^ E_NOTICE);
 
