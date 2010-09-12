@@ -36,9 +36,8 @@ function curl_http_get($url) {
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 	}
-	$epi_curl = EpiCurl::getInstance();
-	$response = $epi_curl->addCurl($ch);
-	return $response->data;
+	$response = curl_exec($ch);
+	return $response;
 }
 
 function curl_http_get_store($url, $filename) {
