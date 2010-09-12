@@ -94,6 +94,12 @@ function get_client_ip_address() {
 	return $ip_decimal;
 }
 
+function get_unix_timestamp() {
+	$unix_time = time();
+	$gmt_mysql_time_string = gmdate("Y-m-d H:i:s", $unix_time);
+	return $gmt_mysql_time_string;
+}
+
 function json_encode_pretty($input) {
 	$tab = "  ";
 	$return_value = "";
