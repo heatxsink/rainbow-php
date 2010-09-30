@@ -29,14 +29,10 @@ include_once('../lib/Rainbow/Rainbow.class.php');
 include_once('../lib/Rainbow/BaseController.class.php');
 include_once('../lib/Rainbow/BaseApiController.class.php');
 
-// your site controllers should go below here
+// application controllers
 include_once('../controllers/RootController.php');
 include_once('../controllers/UsersController.php');
 include_once('../controllers/ApiController.php');
-
-// do not load our php includes unless we actually use them this should come 
-// back in a later version of rainbow, this is obviously not being used properly
-// spl_autoload_register();
 
 error_reporting(E_ALL ^ E_NOTICE);
 
