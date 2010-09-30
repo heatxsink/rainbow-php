@@ -53,4 +53,55 @@ class BaseController {
 		
 		return self::$template_engine;
 	}
+	
+	public function RaiseErrorMissingParam($param) {
+		$this->service->SetFormat(ContentType::APPLICATION_X_JAVASCRIPT);
+		$status_code = 400;
+		$this->service->SetStatus($status_code);
+		
+		$data = $this->RenderJson(
+			array(
+				"error" => "$param parameter is malformed or missing", 
+				"status_code" => $status_code . ' ' . $this->service->status_codes[$status_code]
+			)
+		);
+		
+		$this->service->SendData($data);
+	}
+
+	public function RaiseErrorUnauthorized($param) {
+		$this->service->SetFormat(ContentType::APPLICATION_X_JAVASCRIPT);
+		$status_code = 401;
+		$this->service->SetStatus($status_code);
+		
+		$data = $this->RenderJson(
+			array(
+				"error" => "$param parameter is invalid", 
+				"status_code" => $status_code . ' ' . $this->service->status_codes[$status_code]
+			)
+		);
+		
+		$this->service->SendData($data);
+	}
+
+	public function RenderJson($data) {
+		$this->service->SetFormat(ContentType::APPLICATION_X_JAVASCRIPT);
+		$return_value = '';
+		
+		if(validate_var($_GET['formatted'])) {
+			
+			$return_value = json_encode_pretty($data);
+		} else {
+			
+			$return_value = json_encode($data);
+		}
+		
+		if(validate_var($_GET['json_callback'])) {
+			
+			$json_callback = $_GET['json_callback'];
+			$return_value = sprintf("%s(%s);", $json_callback, $return_value);
+		}
+		
+		$this->service->SendData($return_value);
+	}
 }

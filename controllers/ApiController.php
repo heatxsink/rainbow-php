@@ -1,6 +1,6 @@
 <?php
 
-class ApiController extends BaseApiController {
+class ApiController extends BaseController {
 
 	private static $data = array(
 						array("first_name" => "john", "last_name" => "doe"),
