@@ -90,7 +90,7 @@ class BaseController {
 		
 		if(validate_var($_GET['formatted'])) {
 			
-			$return_value = json_encode_pretty($data);
+			$return_value = rainbow_json_encode_pretty($data);
 		} else {
 			
 			$return_value = json_encode($data);
