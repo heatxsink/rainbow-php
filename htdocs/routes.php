@@ -22,12 +22,12 @@
  * THE SOFTWARE.
  *
  */
+
 include_once('../lib/Smarty2/Smarty.class.php');
 include_once('../lib/Rainbow/functions.php');
 include_once('../lib/Rainbow/Config.class.php');
 include_once('../lib/Rainbow/Rainbow.class.php');
 include_once('../lib/Rainbow/BaseController.class.php');
-include_once('../lib/Rainbow/BaseApiController.class.php');
 
 // application controllers
 include_once('../controllers/RootController.php');

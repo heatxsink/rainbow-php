@@ -88,15 +88,15 @@ class BaseController {
 		$this->service->SetFormat(ContentType::APPLICATION_X_JAVASCRIPT);
 		$return_value = '';
 		
-		if(validate_var($_GET['formatted'])) {
+		if(rainbow_validate_var($_GET['formatted'])) {
 			
-			$return_value = json_encode_pretty($data);
+			$return_value = rainbow_json_encode_pretty($data);
 		} else {
 			
 			$return_value = json_encode($data);
 		}
 		
-		if(validate_var($_GET['json_callback'])) {
+		if(rainbow_validate_var($_GET['json_callback'])) {
 			
 			$json_callback = $_GET['json_callback'];
 			$return_value = sprintf("%s(%s);", $json_callback, $return_value);

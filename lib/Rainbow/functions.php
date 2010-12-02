@@ -23,7 +23,7 @@
  *
  */
 
-function curl_http_get($url) {
+function rainbow_curl_http_get($url) {
 	$ssl = false;
 	$ch = curl_init($url);
 	$headers = array("User-Agent: rainbow-php");
@@ -40,28 +40,24 @@ function curl_http_get($url) {
 	return $response;
 }
 
-function curl_http_get_store($url, $filename) {
-	$data = curl_http_get($url);
+function rainbow_curl_http_get_store($url, $filename) {
+	$data = rainbow_curl_http_get($url);
 	$fh = fopen($filename, 'w');
 	fwrite($fh, $data);
 	fclose($fh);
 }
 
-function generate_guid() {
-	// The field names refer to RFC 4122 section 4.1.2
+function rainbow_generate_guid() {
 	return sprintf('%04x%04x%04x%03x4_%04x%04x%04x%04x',
-	mt_rand(0, 65535), mt_rand(0, 65535), // 32 bits for "time_low"
-	mt_rand(0, 65535), // 16 bits for "time_mid"
-	mt_rand(0, 4095),  // 12 bits before the 0100 of (version) 4 for "time_hi_and_version"
-	bindec(substr_replace(sprintf('%016b', mt_rand(0, 65535)), '01', 6, 2)),
-	   // 8 bits, the last two of which (positions 6 and 7) are 01, for "clk_seq_hi_res"
-	   // (hence, the 2nd hex digit after the 3rd hyphen can only be 1, 5, 9 or d)
-	   // 8 bits for "clk_seq_low"
-	mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535) // 48 bits for "node"
+		mt_rand(0, 65535), mt_rand(0, 65535),
+		mt_rand(0, 65535),
+		mt_rand(0, 4095),
+		bindec(substr_replace(sprintf('%016b', mt_rand(0, 65535)), '01', 6, 2)),
+		mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535)
 	);
 }
 
-function validate_var($var) {
+function rainbow_validate_var($var) {
 	$return_value = false;
 	if(isset($var) && strlen(trim($var)) > 0) {
 		$return_value = true;
@@ -69,7 +65,7 @@ function validate_var($var) {
 	return $return_value;
 }
 
-function validate_email_address($email) {
+function rainbow_validate_email_address($email) {
 	$qtext = '[^\\x0d\\x22\\x5c\\x80-\\xff]';
 	$dtext = '[^\\x0d\\x5b-\\x5d\\x80-\\xff]';
 	$atom = '[^\\x00-\\x20\\x22\\x28\\x29\\x2c\\x2e\\x3a-\\x3c'.
@@ -87,20 +83,20 @@ function validate_email_address($email) {
 	return preg_match("!^$addr_spec$!", $email);
 }
 
-function get_client_ip_address() {
+function rainbow_get_client_ip_address() {
 	$ip_address = $_SERVER['REMOTE_ADDR'];
 	$ip_tokens = split('\.', $ip_address);
 	$ip_decimal = ($ip_tokens[3] + $ip_tokens[2] * 256 + $ip_tokens[1] * 256 * 256 + $ip_tokens[0] * 256 * 256 * 256);
 	return $ip_decimal;
 }
 
-function get_unix_timestamp() {
+function rainbow_get_unix_timestamp() {
 	$unix_time = time();
 	$gmt_mysql_time_string = gmdate("Y-m-d H:i:s", $unix_time);
 	return $gmt_mysql_time_string;
 }
 
-function json_encode_pretty($input) {
+function rainbow_json_encode_pretty($input) {
 	$tab = "  ";
 	$return_value = "";
 	$indent_level = 0;
