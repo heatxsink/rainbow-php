@@ -405,7 +405,7 @@ class Rainbow {
 	
 
 	public function SendData($data) {
-		header('x-rainbow-php-version: 0.80');
+		header('x-rainbow-php-version: 0.99');
 		header('Content-Type: ' . $this->format);
 		echo $data;
 	}

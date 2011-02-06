@@ -40,7 +40,7 @@ class BaseController {
 		self::GetTemplateEngine()->assign($key, $value);
 	}
 	
-	private static function GetTemplateEngine() {
+	public static function GetTemplateEngine() {
 		
 		if (!self::$template_engine) {
 			self::$template_engine = new Smarty();

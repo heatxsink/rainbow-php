@@ -22,11 +22,10 @@
 #
 #
 # site variables
-SITE_URL="http://www.yourhostname.com"
 WEB_SERVER_USERNAME=www-data
 USERNAME=your_username
 SSH_KEY="your_ssh_key_here"
-REMOTE_HOSTNAME=vm.noter.me
+REMOTE_HOSTNAME=hostname.goes.here
 # directory variables
 REMOTE_DIR=/var/www/application_name
 CACHE_DIR=../cache
