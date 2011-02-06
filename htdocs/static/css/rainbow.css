@@ -62,3 +62,11 @@ h1 {
 #footer p {
 	text-align: justify;
 }
+
+.dev-mode {
+	color: white;
+	background-color: red;
+	padding: 5px;
+	text-align: center;
+	font-weight: bold;
+}

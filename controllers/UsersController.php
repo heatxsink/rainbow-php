@@ -23,7 +23,7 @@
  *
  */
 
-class UsersController extends BaseController {
+class UsersController extends ApplicationBaseController {
 	
 	/**
 	 * @url GET /

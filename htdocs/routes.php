@@ -29,7 +29,9 @@ include_once('../lib/Rainbow/RainbowConfig.class.php');
 include_once('../lib/Rainbow/Rainbow.class.php');
 include_once('../lib/Rainbow/BaseController.class.php');
 
-// application controllers
+// application specific stuff
+include_once('../lib/ApplicationConfig.class.php');
+include_once('../lib/ApplicationBaseController.class.php');
 include_once('../controllers/RootController.php');
 include_once('../controllers/UsersController.php');
 include_once('../controllers/ApiController.php');

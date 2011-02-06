@@ -23,7 +23,7 @@
  *
  */
 
-class RootController extends BaseController {
+class RootController extends ApplicationBaseController {
 	
 	/**
 	 * This method renders the root of the site.

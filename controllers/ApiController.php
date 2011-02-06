@@ -23,7 +23,7 @@
  *
  */
 
-class ApiController extends BaseController {
+class ApiController extends ApplicationBaseController {
 
 	private static $data = array(
 						array("first_name" => "john", "last_name" => "doe"),
