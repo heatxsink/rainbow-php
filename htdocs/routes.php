@@ -34,18 +34,15 @@ include_once('../controllers/RootController.php');
 include_once('../controllers/UsersController.php');
 include_once('../controllers/ApiController.php');
 
-error_reporting(E_ALL ^ E_NOTICE);
-
 date_default_timezone_set(RainbowConfig::$RAINBOW_DEFAULT_TIMEZONE);
 
 $rainbow = null;
 
 if(RainbowConfig::$RAINBOW_DEBUG_MODE) {
-	
 	$rainbow = new Rainbow('debug');
 	$rainbow->FlushCache();
 } else {
-	
+	error_reporting(E_ALL ^ E_NOTICE);
 	$rainbow = new Rainbow('prod');
 }
 
