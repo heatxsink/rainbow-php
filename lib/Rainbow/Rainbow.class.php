@@ -1,7 +1,7 @@
 <?php
 /*
  *
- * Copyright (c) 2010 Nicholas Granado
+ * Copyright (c) 2011 Nicholas Granado
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -81,7 +81,7 @@ class Rainbow {
 	);
 
 	public function	 __construct($mode = 'debug') {
-		$this->cache_file = Config::$RAINBOW_ROUTE_TABLE;
+		$this->cache_file = RainbowConfig::$RAINBOW_ROUTE_TABLE;
 		$this->mode = $mode;
 
 		if($mode == 'prod') {

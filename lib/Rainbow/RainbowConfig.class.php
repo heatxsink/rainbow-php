@@ -1,7 +1,7 @@
 <?php
 /*
  *
- * Copyright (c) 2010 Nicholas Granado
+ * Copyright (c) 2011 Nicholas Granado
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,7 @@
  *
  */
 
-class Config {
+class RainbowConfig {
 
 	public static $RAINBOW_DEBUG_MODE = false;
 	public static $RAINBOW_ROUTE_TABLE = '../../cache/route_table.apc';

@@ -25,7 +25,7 @@
 
 include_once('../lib/Smarty2/Smarty.class.php');
 include_once('../lib/Rainbow/functions.php');
-include_once('../lib/Rainbow/Config.class.php');
+include_once('../lib/Rainbow/RainbowConfig.class.php');
 include_once('../lib/Rainbow/Rainbow.class.php');
 include_once('../lib/Rainbow/BaseController.class.php');
 
@@ -36,11 +36,11 @@ include_once('../controllers/ApiController.php');
 
 error_reporting(E_ALL ^ E_NOTICE);
 
-date_default_timezone_set(Config::$RAINBOW_DEFAULT_TIMEZONE);
+date_default_timezone_set(RainbowConfig::$RAINBOW_DEFAULT_TIMEZONE);
 
 $rainbow = null;
 
-if(Config::$RAINBOW_DEBUG_MODE) {
+if(RainbowConfig::$RAINBOW_DEBUG_MODE) {
 	
 	$rainbow = new Rainbow('debug');
 	$rainbow->FlushCache();

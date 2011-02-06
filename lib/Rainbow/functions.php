@@ -1,7 +1,7 @@
 <?php
 /*
  *
- * Copyright (c) 2010 Nicholas Granado
+ * Copyright (c) 2011 Nicholas Granado
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -157,6 +157,26 @@ function rainbow_json_encode_pretty($input) {
 		}
 	}
 	return $return_value;
+}
+
+function rainbow_is_ipad_request() {
+	return strstr($_SERVER['HTTP_USER_AGENT'], 'iPad');
+}
+
+function rainbow_is_iphone_request() {
+	return strstr($_SERVER['HTTP_USER_AGENT'], 'iPhone');
+}
+
+function rainbow_is_android_request() {
+	return strstr($_SERVER['HTTP_USER_AGENT'], 'Android');
+}
+
+function rainbow_is_webos_request() {
+	return strstr($_SERVER['HTTP_USER_AGENT'], 'webOS');
+}
+
+function rainbow_is_ios_request() {
+	return strstr($_SERVER['HTTP_USER_AGENT'], 'iPad') || strstr($_SERVER['HTTP_USER_AGENT'], 'iPod') || strstr($_SERVER['HTTP_USER_AGENT'], 'iPhone');
 }
 
 ?>

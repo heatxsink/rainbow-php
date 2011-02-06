@@ -1,7 +1,7 @@
 <?php
 /*
  *
- * Copyright (c) 2010 Nicholas Granado
+ * Copyright (c) 2011 Nicholas Granado
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -44,18 +44,17 @@ class BaseController {
 		
 		if (!self::$template_engine) {
 			self::$template_engine = new Smarty();
-			self::$template_engine->debugging = Config::$SMARTY_DEBUG_MODE;
-			self::$template_engine->template_dir = Config::$SMARTY_TEMPLATE_DIRECTORY;
-			self::$template_engine->compile_dir = Config::$SMARTY_COMPILE_DIRECTORY;
-			self::$template_engine->cache_dir = Config::$SMARTY_CACHE_DIRECTORY;
-			self::$template_engine->config_dir = Config::$SMARTY_CONFIG_DIRECTORY;
+			self::$template_engine->debugging = RainbowConfig::$SMARTY_DEBUG_MODE;
+			self::$template_engine->template_dir = RainbowConfig::$SMARTY_TEMPLATE_DIRECTORY;
+			self::$template_engine->compile_dir = RainbowConfig::$SMARTY_COMPILE_DIRECTORY;
+			self::$template_engine->cache_dir = RainbowConfig::$SMARTY_CACHE_DIRECTORY;
+			self::$template_engine->config_dir = RainbowConfig::$SMARTY_CONFIG_DIRECTORY;
 		}
 		
 		return self::$template_engine;
 	}
 	
 	public function RaiseErrorMissingParam($param) {
-		$this->service->SetFormat(ContentType::APPLICATION_X_JAVASCRIPT);
 		$status_code = 400;
 		$this->service->SetStatus($status_code);
 		
@@ -70,7 +69,6 @@ class BaseController {
 	}
 
 	public function RaiseErrorUnauthorized($param) {
-		$this->service->SetFormat(ContentType::APPLICATION_X_JAVASCRIPT);
 		$status_code = 401;
 		$this->service->SetStatus($status_code);
 		
@@ -85,11 +83,11 @@ class BaseController {
 	}
 
 	public function RenderJson($data) {
-		$this->service->SetFormat(ContentType::APPLICATION_X_JAVASCRIPT);
+		$this->service->SetFormat(ContentType::APPLICATION_JSON);
 		$return_value = '';
 		
 		if(rainbow_validate_var($_GET['formatted'])) {
-			
+			$this->service->SetFormat(ContentType::APPLICATION_X_JAVASCRIPT);
 			$return_value = rainbow_json_encode_pretty($data);
 		} else {
 			
