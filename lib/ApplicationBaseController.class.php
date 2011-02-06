@@ -26,13 +26,10 @@
 class ApplicationBaseController extends BaseController{
 	
 	public function Render($template) {
-		//
-		//  If you want html minify'ing just un-comment this block.
-		//
-		//if (!ApplicationConfig::IsDeveloperMode()) {
-		//	self::$template_engine->load_filter('output', 'html_minify');
-		//}
-		//
+		// to enable html minification flip the HTML_MINIFY flag in the ApplicationConfig.class.php
+		if(ApplicationConfig::$HTML_MINIFY) {
+			self::$template_engine->load_filter('output', 'html_minify');
+		}
 		self::$template_engine->assign('developer_mode', ApplicationConfig::IsDeveloperMode());
 		$this->GetTemplateEngine()->display($template);
 	}

@@ -27,8 +27,9 @@ putenv("DEVELOPER_MODE=0");
 
 class ApplicationConfig {
 	
-	public static function IsDeveloperMode()
-	{
+	public static $HTML_MINIFY = false;
+	
+	public static function IsDeveloperMode() {
 		$developer_mode = (bool) getenv("DEVELOPER_MODE");
 		return $developer_mode;
 	}

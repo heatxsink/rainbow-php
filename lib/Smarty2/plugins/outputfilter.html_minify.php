@@ -23,7 +23,7 @@
  * @param string
  * @param Smarty
  */
-function smarty_outputfilter_trimwhitespace($source, &$smarty)
+function smarty_outputfilter_html_minify($source, &$smarty)
 {
     // Pull out the script blocks
     preg_match_all("!<script[^>]*?>.*?</script>!is", $source, $match);
