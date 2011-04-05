@@ -30,7 +30,7 @@ class ApplicationConfig {
 	public static $HTML_MINIFY = false;
 	
 	public static function IsDeveloperMode() {
-		$developer_mode = (bool) getenv("DEVELOPER_MODE");
+		$developer_mode = (bool) $_SERVER['DEVELOPER_MODE'];
 		return $developer_mode;
 	}
 }
