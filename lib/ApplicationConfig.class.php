@@ -23,8 +23,6 @@
  *
  */
 
-putenv("DEVELOPER_MODE=0");
-
 class ApplicationConfig {
 	
 	public static $HTML_MINIFY = false;
