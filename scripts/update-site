@@ -21,27 +21,26 @@
 # THE SOFTWARE.
 #
 #
-# site variables
+REMOTE_HOSTNAME=your.servername.here
+echo "pushing code to $REMOTE_HOSTNAME ...";
 WEB_SERVER_USERNAME=www-data
-USERNAME=your_username
-SSH_KEY="your_ssh_key_here"
-REMOTE_HOSTNAME=hostname.goes.here
-# directory variables
-REMOTE_DIR=/var/www/application_name
+USERNAME=www-data
+SSH_KEY="your ssh key here"
+REMOTE_DIR=/var/www/application/www/htdocs
+
 CACHE_DIR=../cache
 CONTROLLERS_DIR=../controllers
 HTDOCS_DIR=../htdocs
 LIB_DIR=../lib
-SMARTY_DIR=../views
-# lets run some rsync over ssh commands
+VIEWS_DIR=../views
+
+echo "resetting ownership ...";
 /usr/bin/ssh -i $SSH_KEY $USERNAME@$REMOTE_HOSTNAME "sudo chown -R $USERNAME:$USERNAME $REMOTE_DIR/"
-echo "purging smarty template cache ...";
+echo "purging smarty cache ...";
 /usr/bin/ssh -i $SSH_KEY $USERNAME@$REMOTE_HOSTNAME "cd $REMOTE_DIR/views/smarty/templates_c/; sudo rm *.php;"
 echo "purging rainbow-php cache ...";
 /usr/bin/ssh -i $SSH_KEY $USERNAME@$REMOTE_HOSTNAME "cd $REMOTE_DIR/cache/; sudo rm *.apc;"
-/usr/bin/rsync -avz -e "ssh -i $SSH_KEY" $CACHE_DIR $USERNAME@$REMOTE_HOSTNAME:$REMOTE_DIR/
-/usr/bin/rsync -avz -e "ssh -i $SSH_KEY" $CONTROLLERS_DIR $USERNAME@$REMOTE_HOSTNAME:$REMOTE_DIR/
-/usr/bin/rsync -avz -e "ssh -i $SSH_KEY" $HTDOCS_DIR $USERNAME@$REMOTE_HOSTNAME:$REMOTE_DIR/
-/usr/bin/rsync -avz -e "ssh -i $SSH_KEY" $LIB_DIR $USERNAME@$REMOTE_HOSTNAME:$REMOTE_DIR/
-/usr/bin/rsync -avz -e "ssh -i $SSH_KEY" $SMARTY_DIR $USERNAME@$REMOTE_HOSTNAME:$REMOTE_DIR/
+echo "rsync'ing ...";
+/usr/bin/rsync -avz -e "ssh -i $SSH_KEY" $VIEWS_DIR $LIB_DIR $HTDOCS_DIR $CONTROLLERS_DIR $CACHE_DIR $USERNAME@$REMOTE_HOSTNAME:$REMOTE_DIR/
+echo "setting ownership ...";
 /usr/bin/ssh -i $SSH_KEY $USERNAME@$REMOTE_HOSTNAME "sudo chown -R $WEB_SERVER_USERNAME:$WEB_SERVER_USERNAME $REMOTE_DIR/"

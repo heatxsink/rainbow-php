@@ -1,0 +1,6 @@
+*.pyc
+*.pyo
+*.exe
+*.config
+.idea
+.DS_Store
