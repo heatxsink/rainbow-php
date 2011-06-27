@@ -17,7 +17,7 @@ tested with
 * sshd (this is only required for 'scripts/update-site')
 * Linux (has not been tested on Windows)
 
-apache 2.X virtual host config file
+apache 2.x virtual host config file
 -----------------------------------
 with this kind of setup you can easily get rainbow-php up and running on apache 2 web-servers.
 
