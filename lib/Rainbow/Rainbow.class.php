@@ -37,6 +37,7 @@ class Rainbow {
 	public $method;
 	public $format;
 	
+	protected $cache_prefix = '';
 	protected $cache_file = '';
 	protected $mode = 'debug';
 	protected $route_table = array();
@@ -82,13 +83,13 @@ class Rainbow {
 
 	public function	 __construct($mode = 'debug') {
 		$this->cache_file = RainbowConfig::$RAINBOW_ROUTE_TABLE;
+		$this->cache_prefix = RainbowConfig::$RAINBOW_ROUTE_TABLE_PREFIX;
 		$this->mode = $mode;
-
 		if($mode == 'prod') {
 			
 			if(function_exists('apc_fetch')) {
-				
-				$route_table = apc_fetch('route_table');
+				$cache_key = $this->cache_prefix . '_route_table';
+				$route_table = apc_fetch($cache_key);
 			}
 			elseif(file_exists(dirname(__FILE__) . $this->cache_file)) {
 				
@@ -108,8 +109,8 @@ class Rainbow {
 		if($this->mode == 'prod' && !$this->cached) {
 			
 			if(function_exists('apc_store')) {
-				
-				apc_store('route_table', $this->route_table);
+				$cache_key = $this->cache_prefix . '_route_table';
+				apc_store($cache_key, $this->route_table);
 			} else {
 				
 				file_put_contents(dirname(__FILE__) . '/' . $this->cache_file, serialize($this->route_table));

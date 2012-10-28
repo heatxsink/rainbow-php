@@ -27,6 +27,9 @@ class RainbowConfig {
 
 	public static $RAINBOW_DEBUG_MODE = false;
 	public static $RAINBOW_ROUTE_TABLE = '../../cache/route_table.apc';
+	// $RAINBOW_ROUTE_TABLE_PREFIX is useful when you have more than one 
+	// verison of a rainbow-php app is running on a server.
+	public static $RAINBOW_ROUTE_TABLE_PREFIX = '--';
 	public static $RAINBOW_DEFAULT_TIMEZONE = 'America/Los_Angeles';
 	public static $SMARTY_DEBUG_MODE = false;
 	public static $SMARTY_TEMPLATE_DIRECTORY = '../views/smarty/templates';
